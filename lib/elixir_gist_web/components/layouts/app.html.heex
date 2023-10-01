@@ -1,0 +1,39 @@
+<header class="flex justify-between items-center px-6 py-3 bg-emDark w-full">
+    <section class="left-items flex relative items-center">
+        <a href={~p"/"}>
+            <img src="/images/gist-logo.svg" alt="logo home button" class="h-8 w-auto">
+        </a>
+        <a href={~p"/"} class="mr-6">
+            <div class="text-white font-brand font-bold text-3xl">Gist</div>
+        </a>
+        <div class="flex items-center gap-2">
+            <input type="search" name="search" id="search" placeholder="Search a gist..." class="rounded focus:outline-none focus:border-emLavender focus:ring-0 bg-emDark-dark text-white placeholder-emDark-light font-brand font-regular text-md h-[90%]">
+            <button class="text-white rounded px-2 py-1 hover:bg-emDark-light hover:text-emPurple transition-colors duration-100 ease-linear font-brand text-lg">
+                Show all
+            </button>
+        </div>
+    </section>
+    <section class="right-items flex relative">
+        <button type="button" id="user-menu-button" class="rounded-full border border-solid border-white bg-emLavender-dark p-1 h-12 w-12 overflow-hidden" phx-click={ElixirGistWeb.Layouts.App.toggle_dropdown_menu}>
+            <img src="/images/user-image.svg" alt="Profile image" class="object-cover w-full">
+        </button>
+        <div id="dropdown_menu" class="dropdown-menu-arrow absolute w-auto right-0 top-full mt-2 bg-emDark rounded shadow-md border border-white border-opacity-25" hidden="true">
+            <%= if @current_user do %>
+                <.link href={~p"/users/settings"} class="flex flex-col items-start text-white px-6 py-2 hover:bg-emDark-light hover:text-emPurple transition-colors duration-100 ease-linear font-brand text-lg" role="menuitem" tabindex="-1" method="get" id="user-menu-item-0">Signed in as <p class="text-emPurple"><%= @current_user.email %></p></.link>
+                <hr class="border-none bg-white bg-opacity-10 h-[1px]">
+                <.link href={~p"/users/log_in"} class="flex items-center justify-center text-white px-6 py-2 hover:bg-emDark-light hover:text-emPurple transition-colors duration-100 ease-linear font-brand text-lg" role="menuitem" tabindex="-1" method="delete" id="user-menu-item-1">Your gists</.link>
+                <.link href={~p"/users/log_in"} class="flex items-center justify-center text-white px-6 py-2 hover:bg-emDark-light hover:text-emPurple transition-colors duration-100 ease-linear font-brand text-lg" role="menuitem" tabindex="-1" method="delete" id="user-menu-item-2">Saved gists</.link>
+                <hr class="border-none bg-white bg-opacity-10 h-[1px]">
+                <.link href={~p"/users/log_out"} class="flex items-center justify-center text-white px-6 py-2 hover:bg-emDark-light hover:text-red-700 transition-colors duration-100 ease-linear font-brand text-lg" role="menuitem" tabindex="-1" method="delete" id="user-menu-item-3">Sign out</.link>
+            <% else %>
+                <.link href={~p"/users/log_in"} class="flex items-center justify-center text-white px-6 py-2 hover:bg-emDark-light hover:text-emPurple transition-colors duration-100 ease-linear font-brand text-lg" role="menuitem" tabindex="-1" method="get" id="user-menu-item-0">Sign in</.link>
+                <hr class="border-none bg-white bg-opacity-10 h-[1px]">
+                <.link href={~p"/users/register"} class="flex items-center justify-center text-white px-6 py-2 hover:bg-emDark-light hover:text-emPurple transition-colors duration-100 ease-linear font-brand text-lg" role="menuitem" tabindex="-1" method="get" id="user-menu-item-1">Register</.link>
+            <% end %>
+        </div>
+    </section>
+</header>
+<main>
+    <.flash_group flash={@flash} />
+    <%= @inner_content %>
+</main>
